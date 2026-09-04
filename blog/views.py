@@ -5,4 +5,5 @@ def blog_view(request):
     return render(request , 'blog/blog-home.html')
 
 def blog_single(request):
-    return render(request , 'blog/blog-single.html')
+    context = {'title' : 'BitCoin has been Fucked !' , 'content' : 'BitCoin price is now 000!' , 'author' : 'Mahdi Pashapur'}
+    return render(request , 'blog/blog-single.html' , context)
