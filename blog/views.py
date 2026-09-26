@@ -12,7 +12,11 @@ def blog_view(request):
     return render(request , 'blog/blog-home.html' , context)
 
 def blog_single(request,pid):
-    post = get_object_or_404(Post , pk=pid)
+    posts = Post.objects.filter(
+        status=1,
+        published_date__lte=timezone.now()
+    )
+    post = get_object_or_404(posts , pk=pid , status =1)
     
     # increment the counted_view
     post.counted_view = F('counted_view') + 1
