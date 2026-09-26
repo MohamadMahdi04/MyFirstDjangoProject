@@ -11,8 +11,17 @@ def blog_view(request):
     context  = {'posts' : posts}
     return render(request , 'blog/blog-home.html' , context)
 
-def blog_single(request):
-    context = {'title' : 'BitCoin has been Fucked !' , 'content' : 'BitCoin price is now 000!' , 'author' : 'Mahdi Pashapur'}
+def blog_single(request,pid):
+    post = get_object_or_404(Post , pk=pid)
+    
+    # increment the counted_view
+    post.counted_view = F('counted_view') + 1
+    post.save(update_fields=['counted_view'])
+
+    # give the current counter from the DB after update
+    post.refresh_from_db()
+    context = {'post' : post}
+    # context = {'title' : 'BitCoin has been Fucked !' , 'content' : 'BitCoin price is now 000!' , 'author' : 'Mahdi Pashapur'}
     return render(request , 'blog/blog-single.html' , context)
 
 # def test(request , name , family_name , age):
